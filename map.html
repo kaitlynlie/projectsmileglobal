@@ -1,0 +1,467 @@
+<!-- map embed -->
+
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDblRQPd5SVhCvpR4C5H4pyjHQswY18H38"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+
+      #loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #ddd;
+        border-top: 4px solid #333;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(113, 147, 200, 0.6);
+        }
+        70% {
+          box-shadow: 0 0 0 14px rgba(113, 147, 200, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(113, 147, 200, 0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+      let map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 20, lng: 0 },
+          zoom: 2,
+          styles: [
+            {
+              featureType: "administrative.country",
+              elementType: "labels.text.fill",
+              stylers: [{ visibility: "on" }, { color: "#6b7280" }],
+            },
+            {
+              featureType: "landscape.natural",
+              elementType: "geometry.fill",
+              stylers: [
+                {
+                  color: "#f5f5f2",
+                },
+                {
+                  visibility: "on",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "geometry.stroke",
+              stylers: [
+                { visibility: "on" },
+                { color: "#d1d5db" },
+                { weight: 1 },
+              ],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "labels.text.stroke",
+              stylers: [{ visibility: "off" }],
+            },
+            {
+              featureType: "transit",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi.attraction",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "landscape.man_made",
+              elementType: "geometry.fill",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+                {
+                  visibility: "on",
+                },
+              ],
+            },
+            {
+              featureType: "poi.business",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi.medical",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi.place_of_worship",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi.school",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi.sports_complex",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "road.arterial",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+                {
+                  color: "#ffffff",
+                },
+              ],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road.arterial",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+              ],
+            },
+            {
+              featureType: "road.local",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+              ],
+            },
+            {
+              featureType: "poi.park",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "water",
+              stylers: [
+                {
+                  color: "#71c8d4",
+                },
+              ],
+            },
+            {
+              featureType: "landscape",
+              stylers: [
+                {
+                  color: "#e5e8e7",
+                },
+              ],
+            },
+            {
+              featureType: "poi.park",
+              stylers: [
+                {
+                  color: "#8ba129",
+                },
+              ],
+            },
+            {
+              featureType: "road",
+              stylers: [
+                {
+                  color: "#ffffff",
+                },
+              ],
+            },
+            {
+              featureType: "poi.sports_complex",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#c7c7c7",
+                },
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "water",
+              stylers: [
+                {
+                  color: "#a0d3d3",
+                },
+              ],
+            },
+            {
+              featureType: "poi.park",
+              stylers: [
+                {
+                  color: "#91b65d",
+                },
+              ],
+            },
+            {
+              featureType: "poi.park",
+              stylers: [
+                {
+                  gamma: 1.51,
+                },
+              ],
+            },
+            {
+              featureType: "road.local",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road.local",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "on",
+                },
+              ],
+            },
+            {
+              featureType: "poi.government",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "landscape",
+              stylers: [{ visibility: "on" }, { color: "#f8fafc" }],
+            },
+            {
+              featureType: "road",
+              elementType: "labels",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road.arterial",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "road.local",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "road",
+            },
+            {
+              featureType: "road",
+            },
+            {},
+            {
+              featureType: "road.highway",
+            },
+          ],
+          disableDefaultUI: true,
+          zoomControl: true,
+        });
+      }
+
+      initMap();
+
+      window.addEventListener("message", function (event) {
+        const data = event.data;
+        if (!data || data.type !== "LOAD_MARKERS") return;
+
+        const bounds = new google.maps.LatLngBounds();
+
+        data.chapters.forEach((chapter) => {
+          const lat = parseFloat(chapter.latitude);
+          const lng = parseFloat(chapter.longitude);
+
+          if (isNaN(lat) || isNaN(lng)) return;
+
+          const pulseDot = document.createElement("div");
+
+          pulseDot.style.width = "14px";
+          pulseDot.style.height = "14px";
+          pulseDot.style.borderRadius = "50%";
+          pulseDot.style.background = "#1B3A6B";
+          pulseDot.style.boxShadow = "0 0 0 rgba(27,58,107, 0.6)";
+          pulseDot.style.animation = "pulse 1.5s infinite";
+          pulseDot.style.border = "2px solid white";
+
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: map,
+            title: chapter.title,
+            icon: {
+              url:
+                "data:image/svg+xml;charset=UTF-8," +
+                encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+             <circle cx="20" cy="20" r="6" fill="#7193C8">
+                <animate attributeName="r" values="6;8;6" dur="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          `),
+              scaledSize: new google.maps.Size(40, 40),
+              anchor: new google.maps.Point(20, 20),
+            },
+          });
+
+          marker.addListener("click", function () {
+            map.panTo({ lat, lng });
+
+            window.parent.postMessage(
+              {
+                type: "OPEN_POPUP",
+                title: chapter.title,
+                name: chapter.name || "",
+                location: chapter.location || "",
+                link: chapter.link,
+                image: chapter.image,
+              },
+              "*",
+            );
+          });
+
+          bounds.extend({ lat, lng });
+        });
+
+        map.fitBounds(bounds, 0);
+
+        google.maps.event.addListenerOnce(map, "idle", function () {
+          const loader = document.getElementById("loader");
+          if (loader) loader.style.display = "none";
+        });
+      });
+    </script>
+  </body>
+</html>
