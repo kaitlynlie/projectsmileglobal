@@ -1,0 +1,125 @@
+<!-- marquee of logos of collaborators/sponsors. the logos are duplicated to create a seamless scrolling effect. -->
+
+<div class="marquee">
+  <div class="track">
+    <div class="group">
+      <!-- set 1 -->
+      <img
+        src="https://static.wixstatic.com/media/ace383_18de0bb836a0409c9b1dfee47dea57c0~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_5f5c77f17c2c4f528a4dbf2a13e34113~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_1d767730d5ef41fab5ada650ed0eb29c~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_992fc7540c454699bf0590667faf903d~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_3eec3db941ce45e2a50df61286c87ee4~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_12cd7660b9944392857556922da37680~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_bda40927d1fb477ea5837e8650a1adc8~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_c49f2b2c99e74b96a3c3fdd4b5daad37~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_f0cb19e0c02f42c49ed8c9e68a6a3283~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_7007682717354b92bde9ad5f5951651e~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_b1f5602dd32a4097ae9be58d1307ae12~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_272b628cb1454d5c996e1482fca9a995~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_bf5a8c4fe6d24deca6400b4fab27e699~mv2.png"
+      />
+    </div>
+
+    <div class="group">
+      <!-- set 2 -->
+      <img
+        src="https://static.wixstatic.com/media/ace383_18de0bb836a0409c9b1dfee47dea57c0~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_5f5c77f17c2c4f528a4dbf2a13e34113~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_1d767730d5ef41fab5ada650ed0eb29c~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_992fc7540c454699bf0590667faf903d~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_3eec3db941ce45e2a50df61286c87ee4~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_12cd7660b9944392857556922da37680~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_bda40927d1fb477ea5837e8650a1adc8~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_c49f2b2c99e74b96a3c3fdd4b5daad37~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_f0cb19e0c02f42c49ed8c9e68a6a3283~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_7007682717354b92bde9ad5f5951651e~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_b1f5602dd32a4097ae9be58d1307ae12~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_272b628cb1454d5c996e1482fca9a995~mv2.png"
+      />
+      <img
+        src="https://static.wixstatic.com/media/ace383_bf5a8c4fe6d24deca6400b4fab27e699~mv2.png"
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: scroll 50s linear infinite;
+    will-change: transform;
+  }
+
+  .group {
+    display: flex;
+  }
+
+  .group img {
+    height: 80px;
+    flex-shrink: 0;
+    margin-right: 40px;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

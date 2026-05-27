@@ -65,4 +65,47 @@ $w.onReady(async function () {
       wixLocation.to(currentLink); 
     } 
   }); 
+
+  $w("#repeater1").onItemReady(($item, itemData, index) => {
+
+  $item("#box198").onClick(() => {
+    const link = itemData["link-import-1-title"];
+    if (link) {
+      wixLocation.to(link);
+    }
+  });
+});
+
+$w("#repeater3").onItemReady(($item, itemData, index) => {
+
+  $item("#box204").onClick(() => {
+    const link = itemData["link-import-1-title"];
+    if (link) {
+      wixLocation.to(link);
+    }
+  });
+});
+
+$w("#repeater2").onItemReady(($item, itemData, index) => {
+
+  $item("#box202").onClick(() => {
+    const link = itemData["link-import-1-title"];
+    if (link) {
+      wixLocation.to(link);
+    }
+  });
+});
+
+$w("#repeater4").onItemReady(($item, itemData) => {
+  console.log("Repeater4 item:", itemData.title, itemData["link-import-1-title"]);
+
+  $item("#box207").onClick(() => {
+    const link = itemData["link-import-1-title"];
+
+    if (link && typeof link === "string") {
+      wixLocation.to(link);
+    }
+  });
+});
+
 });
