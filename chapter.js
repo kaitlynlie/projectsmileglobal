@@ -5,26 +5,30 @@ $w.onReady(function () {
 
     const item = $w("#dynamicDataset").getCurrentItem();
 
-	console.log("IMAGE FIELD:", item.mediagallery);
+    //console.log("IMAGE FIELD:", item.mediagallery);
 
-  const rawImages = item.mediagallery;
+    const rawImages = item.mediagallery;
 
-	const images =
-	Array.isArray(rawImages)
-		? rawImages
-		: rawImages?.items
-		? rawImages.items
-		: rawImages
-			? [rawImages]
-			: [];
+    // handle different formats of the image field (array, single object, or items array)
+    const images =
+    Array.isArray(rawImages)
+      ? rawImages
+      : rawImages?.items
+      ? rawImages.items
+      : rawImages
+        ? [rawImages]
+        : [];
 
-	const hasImages = images.length > 0;
+    // if there are no images, collapse the gallery section
+    const hasImages = images.length > 0;
 
-	if (!hasImages) {
-	$w("#gallerySection").collapse();
-	} else {
-	$w("#gallerySection").expand();
-	}
+    if (!hasImages) {
+    $w("#gallerySection").collapse();
+    } else {
+    $w("#gallerySection").expand();
+    }
+
+    // if domain exists
 
     if (!item.domain) {
       $w("#domainLabel").collapse();
@@ -34,6 +38,7 @@ $w.onReady(function () {
       $w("#domainContainer").text = item.domain;
     }
 
+    // if instagram exists
     if (!item.instagram) {
       $w("#instagramLabel").collapse();
       $w("#instagramLine").collapse();

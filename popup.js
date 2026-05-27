@@ -8,6 +8,7 @@ let imageRequestId = 0; // race conditon
 
 $w.onReady(async function () {
   const res = await wixData.query("Import1").find(); 
+
   const cleanData = res.items.map(item => ({ 
     title: item.title, 
     name: item.name, 
@@ -24,18 +25,21 @@ $w.onReady(async function () {
   }); 
   
   $w("#chapterPopup").collapse(); 
+
   $w("#mapHtml").onMessage((event) => { 
     const data = event.data; 
     if (!data || data.type !== "OPEN_POPUP") return; 
     
-    console.log("MESSAGE RECEIVED:", data); 
+    // console.log("MESSAGE RECEIVED:", data); 
     
     currentLink = data.link; 
 
+    // set the popup content based on the data from the marker that was clicked
     $w("#popupTitle").text = data.title || "No title"; 
     $w("#popupLocation").text = data.location || ""; 
     $w("#popupName").text = data.name || ""; 
 
+    // reset the image and show the loader while the new image is loading, to prevent showing the wrong image if the user clicks on markers quickly
     $w("#popupImage").hide(); 
     $w("#imageLoader").show(); 
     
@@ -66,46 +70,42 @@ $w.onReady(async function () {
     } 
   }); 
 
+  // link all elements underneath the map to their corresponding links in the dataset
+
   $w("#repeater1").onItemReady(($item, itemData, index) => {
-
-  $item("#box198").onClick(() => {
-    const link = itemData["link-import-1-title"];
-    if (link) {
-      wixLocation.to(link);
-    }
+    $item("#box198").onClick(() => {
+      const link = itemData["link-import-1-title"];
+      if (link) {
+        wixLocation.to(link);
+      }
+    });
   });
-});
 
-$w("#repeater3").onItemReady(($item, itemData, index) => {
-
-  $item("#box204").onClick(() => {
-    const link = itemData["link-import-1-title"];
-    if (link) {
-      wixLocation.to(link);
-    }
+  $w("#repeater3").onItemReady(($item, itemData, index) => {
+    $item("#box204").onClick(() => {
+      const link = itemData["link-import-1-title"];
+      if (link) {
+        wixLocation.to(link);
+      }
+    });
   });
-});
 
-$w("#repeater2").onItemReady(($item, itemData, index) => {
-
-  $item("#box202").onClick(() => {
-    const link = itemData["link-import-1-title"];
-    if (link) {
-      wixLocation.to(link);
-    }
+  $w("#repeater2").onItemReady(($item, itemData, index) => {
+    $item("#box202").onClick(() => {
+      const link = itemData["link-import-1-title"];
+      if (link) {
+        wixLocation.to(link);
+      }
+    });
   });
-});
 
-$w("#repeater4").onItemReady(($item, itemData) => {
-  console.log("Repeater4 item:", itemData.title, itemData["link-import-1-title"]);
-
-  $item("#box207").onClick(() => {
-    const link = itemData["link-import-1-title"];
-
-    if (link && typeof link === "string") {
-      wixLocation.to(link);
-    }
+  $w("#repeater4").onItemReady(($item, itemData) => {
+    console.log("Repeater4 item:", itemData.title, itemData["link-import-1-title"]);
+    $item("#box207").onClick(() => {
+      const link = itemData["link-import-1-title"];
+      if (link && typeof link === "string") {
+        wixLocation.to(link);
+      }
+    });
   });
-});
-
 });

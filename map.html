@@ -1,4 +1,4 @@
-<!-- displays the map with markers for each chapter location. when a marker is clicked, it sends a message to the parent window to open the corresponding popup with chapter details. -->
+<!-- displays the map with markers for each chapter location. when a marker is clicked, it opens the corresponding popup with chapter details. -->
 
 <!doctype html>
 <html>
@@ -74,6 +74,7 @@
         map = new google.maps.Map(document.getElementById("map"), {
           center: { lat: 20, lng: 0 },
           zoom: 2,
+          // custom map style from snazzymaps: snazzymaps.com/style/74/becomeadinosaur
           styles: [
             {
               featureType: "administrative.country",
@@ -398,8 +399,10 @@
         const data = event.data;
         if (!data || data.type !== "LOAD_MARKERS") return;
 
+        // get bounds from all the chapter locations so we can fit the map to show all markers
         const bounds = new google.maps.LatLngBounds();
 
+        // parse through chapter data and add a marker for each chapter with valid latitude and longitude
         data.chapters.forEach((chapter) => {
           const lat = parseFloat(chapter.latitude);
           const lng = parseFloat(chapter.longitude);
@@ -408,6 +411,7 @@
 
           const pulseDot = document.createElement("div");
 
+          // market styles for pulsing effect
           pulseDot.style.width = "14px";
           pulseDot.style.height = "14px";
           pulseDot.style.borderRadius = "50%";
@@ -416,6 +420,7 @@
           pulseDot.style.animation = "pulse 1.5s infinite";
           pulseDot.style.border = "2px solid white";
 
+          // create a custom marker with the pulsing dot as the icon
           const marker = new google.maps.Marker({
             position: { lat, lng },
             map: map,
@@ -424,18 +429,19 @@
               url:
                 "data:image/svg+xml;charset=UTF-8," +
                 encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-             <circle cx="20" cy="20" r="6" fill="#7193C8">
-                <animate attributeName="r" values="6;8;6" dur="1.5s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
-              </circle>
-            </svg>
-          `),
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+                  <circle cx="20" cy="20" r="6" fill="#7193C8">
+                      <animate attributeName="r" values="6;8;6" dur="1.5s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                  </svg>
+                `),
               scaledSize: new google.maps.Size(40, 40),
               anchor: new google.maps.Point(20, 20),
             },
           });
 
+          // when a marker is clicked, pan to the marker and send a message to the parent window to open the corresponding popup with chapter details
           marker.addListener("click", function () {
             map.panTo({ lat, lng });
 
@@ -457,6 +463,7 @@
 
         map.fitBounds(bounds, 0);
 
+        // once the map and markers are loaded, hide the loader
         google.maps.event.addListenerOnce(map, "idle", function () {
           const loader = document.getElementById("loader");
           if (loader) loader.style.display = "none";

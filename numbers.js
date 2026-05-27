@@ -8,9 +8,10 @@ $w.onReady(function () {
     const startTime = Date.now();
 
     function update() {
+
+      // calculate the current value based on the elapsed time and apply an easing function for a smoother animation
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-
       const value = Math.floor(target * (1 - Math.pow(1 - progress, 3)));
       element.text = value.toLocaleString();
 
@@ -35,21 +36,22 @@ $w.onReady(function () {
 
   $w("#statsSection").onViewportEnter(() => {
 
+    // only animate the numbers the first time the section enters the viewport
     if (hasAnimated) return;
     hasAnimated = true;
 
     $w("#repeater2").forEachItem(($item, itemData, index) => {
 
+      // set initial value to 0 before animating up to the target value
       $item("#stat2000").text = "0";
       $item("#text245").text = itemData.label;
       $item("#text246").text = itemData.tag;
 
+      // stagger the animation for each stat by 200ms
       setTimeout(() => {
         animateCount($item("#stat2000"), itemData.value, 1500);
       }, index * 200);
 
     });
-
   });
-
 });
