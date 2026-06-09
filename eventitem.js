@@ -10,6 +10,13 @@ $w.onReady(function () {
 
         const hasInstagram = item.instagram;
         const hasWebsite = item.website;
+        const hasRecording = item.recordingUrl;
+
+        // if there is no recording, collapse the recording box
+        if (!hasRecording) {
+            $w("#box206").collapse();
+            $w("#videoPlayer1").collapse();
+        }
 
         // if there are no social links, collapse the whole box
         if (!hasInstagram && !hasWebsite) {
